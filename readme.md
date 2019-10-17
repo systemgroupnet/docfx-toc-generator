@@ -14,6 +14,11 @@ Install-Module powershell-yaml
 ```
 
 ## Installing Module
+
+⚠ THIS MODULE DOES NOT WORK WITH **WINDOWS POWERSHELL**
+
+⚠ MAKE SURE YOU HAVE **POWERSHELL CORE** INSTALLED.
+
 ```powershell
 Install-Module -Name docfx-toc-generator	
 ```
