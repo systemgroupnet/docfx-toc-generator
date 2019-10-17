@@ -25,6 +25,7 @@ function Get-YamlFrontMatter([string]$mdContent, [string]$mdpath) {
     if (($lines | where {$_ -eq "---"}).Length -eq 2){
         $firstIndex = $lines.IndexOf("---") + 1
         $secondIndex = $lines[$firstIndex..$lines.Length].IndexOf("---")
+        Write-Host "Indexing '$mdpath'..." -ForegroundColor DarkGray
         return [string]::Join([System.Environment]::NewLine, $lines[$firstIndex..$secondIndex])
     }
     else{
@@ -33,13 +34,14 @@ function Get-YamlFrontMatter([string]$mdContent, [string]$mdpath) {
     }
 }
 
-function New-TocYaml($folder){
+function New-TocYaml($folder, $tocFolder){
     $mdFiles = [System.IO.Directory]::GetFiles($folder, "*.md", [System.IO.SearchOption]::TopDirectoryOnly) 
     
     $topLevelTocItems = New-Object Collections.Generic.List[Object]
+    
     $mdFiles | % { 
         if([System.IO.Path]::GetFileName($_) -ne "index.md"){
-            $tocItem = Get-MarkdownSingleTocItem $_
+            $tocItem = Get-MarkdownSingleTocItem $_ $tocfolder
             $topLevelTocItems.Add($tocItem)
         }
     }
@@ -49,25 +51,27 @@ function New-TocYaml($folder){
     
     $indexTocItems = New-Object Collections.Generic.List[Object]
     $indexFiles | % {
-        
-            $tocItem = Get-MarkdownSingleTocItem $_            
+
+            $tocItem = Get-MarkdownSingleTocItem $_ $tocFolder      
             $dirOfIndex = [System.IO.Path]::GetDirectoryName($_)
-            $items = (New-TocYaml $dirOfIndex)
+            $toc = New-TocYaml $dirOfIndex $tocFolder
+            $items = $toc | Sort-Object -Property order -Descending
+            $items = @($items)
             
             if($null -ne $items -and $null -ne $tocItem -and $items.Length -gt 0){
-                $tocItem.Add("items", $items)
+                $tocItem.Add("items", @($items))
             }
             
             $indexTocItems.Add($tocItem)
         
     }
 
-    $result = $topLevelTocItems + $indexTocItems
-
-    return $result
+    $result = ($topLevelTocItems + $indexTocItems) | Sort-Object -Property order -Descending
+    $result = @($result)
+    return ([Collections.Generic.List[Object]]$result)
 }
 
-function Get-MarkdownSingleTocItem([string]$markdownPath){
+function Get-MarkdownSingleTocItem([string]$markdownPath, $tocFolder){
     $content = [System.IO.File]::ReadAllText($markdownPath)
     $frontMatter = Get-YamlFrontMatter $content $markdownPath
 
@@ -83,14 +87,22 @@ function Get-MarkdownSingleTocItem([string]$markdownPath){
         return $null
     }
 
-    return @{ "name" = $yaml.name; "href" = $markdownPath }
+    $relPath = [System.IO.Path]::GetRelativePath($tocFolder, $markdownPath)
+
+    $order = $yaml.order
+    if($null -eq $order) { $order = 0 }
+    return @{ "name" = $yaml.name; "href" = $relPath; "order" = $order }
 }
 
 function Build-TocHereRecursive {
     foreach ($docFolder in Get-RootDocFolder .) {
-        Write-Host "==== Generating TOC for [$docFolder] ===========================" -ForegroundColor DarkGray
-        $tocFile = New-TocYaml $docFolder | ConvertTo-Yaml
-        $tocFile > (Join-Path $docFolder "toc-tmp.yml")
-        Write-Host "end ===========================" -ForegroundColor DarkGray
+        Write-Host "==== Generating TOC for [$docFolder] ====================" -ForegroundColor DarkGray
+        $raw = New-TocYaml $docFolder $docFolder
+        $tocFile = ConvertTo-Yaml @($raw)
+        $tocFile > (Join-Path $docFolder "toc.yml")
+        Write-Host "==== End Generating for TOC [$docFolder] ================" -ForegroundColor DarkGray
+        Write-Host
     }
 }
+
+Export-ModuleMember -Function Build-TocHereRecursive
