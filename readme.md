@@ -1,5 +1,7 @@
 # DocFX TOC Generator
 
+![PowerShell Gallery](https://img.shields.io/powershellgallery/v/docfx-toc-generator)
+
 ## What is this?
 This script is used to generate `toc.yml` file for every folder in documentation project.
 
