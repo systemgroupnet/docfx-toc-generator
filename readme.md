@@ -11,6 +11,11 @@ First you should install `powershell-yaml`
 Install-Module powershell-yaml
 ```
 
+## Installing Module
+```powershell
+Install-Module -Name docfx-toc-generator	
+```
+
 ## FAQ
 
 ### How to use this module?
