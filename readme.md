@@ -3,6 +3,14 @@
 ## What is this?
 This script is used to generate `toc.yml` file for every folder in documentation project.
 
+## Prerequesties
+
+First you should install `powershell-yaml`
+
+```powershell
+Install-Module powershell-yaml
+```
+
 ## FAQ
 
 ### How to use this module?
