@@ -1,7 +1,7 @@
 # DocFX TOC Generator
 
 ## What is this?
-This script is used to generate `toc.yml` file for every folder in documentation project folder.
+This script is used to generate `toc.yml` file for every folder in documentation project.
 
 ## FAQ
 
@@ -33,18 +33,18 @@ order: 100 # higher has more priority
 
 ### How to create hierarchy?
 
-This module puts every non-index file `index.md` in the toc, then it includes every `index.md` files in subfolder in the toc, and other files in subfolders in the `items` subchild of `index` file. For example if you have such hierarchy:
+This module puts every non-index file(non-`index.md`) in the toc, then it includes every `index.md` files in subfolder in the toc, and other files in subfolders in the `items` subchild of `index` file. For example if you have such hierarchy:
 
 ```
 |-- root-doc.md
 |-- some-other-root-doc.md
 >-- MyTopic
-|---- somefile.md
-|---- index.md
+  |---- somefile.md
+  |---- index.md
 |
 >-- OtherTopic
-|-- index.md
-|-- hello.md
+  |-- index.md
+  |-- hello.md
 ```
 
 This toc will be generated:
