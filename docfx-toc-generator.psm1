@@ -89,7 +89,8 @@ function Get-MarkdownSingleTocItem([string]$markdownPath){
 function Build-TocHereRecursive {
     foreach ($docFolder in Get-RootDocFolder .) {
         Write-Host "==== Generating TOC for [$docFolder] ===========================" -ForegroundColor DarkGray
-        New-TocYaml $docFolder | ConvertTo-Yaml
+        $tocFile = New-TocYaml $docFolder | ConvertTo-Yaml
+        $tocFile > (Join-Path $docFolder "toc-tmp.yml")
         Write-Host "end ===========================" -ForegroundColor DarkGray
     }
 }
