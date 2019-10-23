@@ -91,8 +91,8 @@ If you want to ignore content of an index and remove its `href` attribute from t
 
 ## Table of Front-Matter Tags
 
-| Attribute | Description | Type |
-| --- | --- | --- |
-| `name` | Gives document a name in toc | string |
-| `order` | Gives order of rendering to the document in toc (higher number has more priority and comes top of others) | int |
-| `nocontent` | Ignores content and remove the `href` attribute in toc | boolean |
+| Attribute | Description                                                                                               | Type    |
+| --------- | --------------------------------------------------------------------------------------------------------- | ------- |
+| name      | Gives document a name in toc                                                                              | string  |
+| order     | Gives order of rendering to the document in toc (higher number has more priority and comes top of others) | int     |
+| nocontent | Ignores content and remove the `href` attribute in toc                                                    | boolean |
