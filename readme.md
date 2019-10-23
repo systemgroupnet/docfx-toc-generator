@@ -1,6 +1,6 @@
 # DocFX TOC Generator
 
-![PowerShell Gallery](https://img.shields.io/powershellgallery/v/docfx-toc-generator)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/docfx-toc-generator)](https://www.powershellgallery.com/packages/docfx-toc-generator/)
 
 ## What is this?
 
