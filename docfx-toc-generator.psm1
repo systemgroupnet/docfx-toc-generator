@@ -91,7 +91,9 @@ function Get-MarkdownSingleTocItem([string]$markdownPath, $tocFolder){
 
     $order = $yaml.order
     if($null -eq $order) { $order = 0 }
-    return @{ "name" = $yaml.name; "href" = $relPath; "order" = $order }
+    $model =  @{ "name" = $yaml.name; "order" = $order };
+    if($yaml.nocontent -ne $true) { $model.Add("href", $relPath) }
+    return $model
 }
 
 function Build-TocHereRecursive {
