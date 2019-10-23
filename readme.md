@@ -3,6 +3,7 @@
 ![PowerShell Gallery](https://img.shields.io/powershellgallery/v/docfx-toc-generator)
 
 ## What is this?
+
 This script is used to generate `toc.yml` file for every folder in documentation project.
 
 ## Prerequesties
@@ -20,7 +21,7 @@ Install-Module powershell-yaml
 ⚠ MAKE SURE YOU HAVE **POWERSHELL CORE** INSTALLED.
 
 ```powershell
-Install-Module -Name docfx-toc-generator	
+Install-Module -Name docfx-toc-generator    
 ```
 
 ## FAQ
@@ -86,3 +87,12 @@ This toc will be generated:
       href: OtherTopic/hello.md
 ```
 
+If you want to ignore content of an index and remove its `href` attribute from toc file, simply add `nocontent: true` to the front matter:
+
+## Table of Front-Matter Tags
+
+| Attribute | Description | Type |
+| --- | --- | --- |
+| `name` | Gives document a name in toc | string |
+| `order` | Gives order of rendering to the document in toc (higher number has more priority and comes top of others) | int |
+| `nocontent` | Ignores content and remove the `href` attribute in toc | boolean |
