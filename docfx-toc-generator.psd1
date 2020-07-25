@@ -98,10 +98,10 @@ PrivateData = @{
         Tags = 'docfx', 'generator', 'toc', 'system-group'
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/0xaryan/docfx-toc-generator/blob/master/license'
+        LicenseUri = 'https://github.com/avestura/docfx-toc-generator/blob/master/license'
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/0xaryan/docfx-toc-generator'
+        ProjectUri = 'https://github.com/avestura/docfx-toc-generator'
 
         # A URL to an icon representing this module.
         # IconUri = ''
