@@ -22,11 +22,10 @@ function Get-RootDocFolder($Path){
 
 function Get-YamlFrontMatter([string]$mdContent, [string]$mdpath) {
     $lines = $mdContent -Split [System.Environment]::NewLine
-    if (($lines | where {$_ -eq "---"}).Length -eq 2){
-        $firstIndex = $lines.IndexOf("---") + 1
-        $secondIndex = $lines[$firstIndex..$lines.Length].IndexOf("---")
+    if(($lines -and ($lines.Length -gt 0) -and ($lines[0] -eq "---"))) {
+        $secondIndex = $lines[1..$lines.Length].IndexOf("---")
         Write-Host "Indexing '$mdpath'..." -ForegroundColor DarkGray
-        return [string]::Join([System.Environment]::NewLine, $lines[$firstIndex..$secondIndex])
+        return [string]::Join([System.Environment]::NewLine, $lines[1..$secondIndex])
     }
     else{
         Write-Host "Front-matter (Yaml meta-data) for '$mdpath' : NOT FOUND" -ForegroundColor DarkGray
