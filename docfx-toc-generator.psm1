@@ -96,7 +96,13 @@ function Get-MarkdownSingleTocItem([string]$markdownPath, $tocFolder){
 }
 
 function Build-TocHereRecursive {
-    foreach ($docFolder in Get-RootDocFolder .) {
+    [CmdletBinding()]
+    param (
+        [Parameter(ValueFromPipeline=$true)]
+        [string]
+        $Path=$PWD
+    )
+    foreach ($docFolder in Get-RootDocFolder $Path) {
         Write-Host "==== Generating TOC for [$docFolder] ====================" -ForegroundColor DarkGray
         $raw = New-TocYaml $docFolder $docFolder
         $tocFile = ConvertTo-Yaml @($raw)
